@@ -20,4 +20,5 @@ from mandis.controllers import diagnosi_controller
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^diagnosi/$', diagnosi_controller.diagnosi_list),
+    url(r'^sorgenti/$', diagnosi_controller.sorgenti_list),
 ]

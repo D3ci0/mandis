@@ -32,7 +32,9 @@ SECRET_KEY = 'iyyrwzjw-ng2150o-dgi4c@^i(es(j%uonu=5i$3be%xpz0icv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['floating-lowlands-19121.herokuapp.com']
+ALLOWED_HOSTS = ['floating-lowlands-19121.herokuapp.com',
+                 '127.0.0.1',
+                 ]
 
 
 # Application definition
