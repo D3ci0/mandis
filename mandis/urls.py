@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from mandis.controllers import diagnosi_controller
+from mandis.controllers import diagnosi_controller, sorgente_controller,\
+    patologia_controller
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^diagnosi/$', diagnosi_controller.diagnosi_list),
+    url(r'^sorgenti/$', sorgente_controller.sorgenti_list),
+    url(r'^patologie/$', patologia_controller.patologie_list),
 ]

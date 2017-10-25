@@ -1,2 +1,9 @@
 eclipse.preferences.version=1
+encoding//mandis/migrations/0001_initial.py=utf-8
+encoding//mandis/migrations/0002_sorgente_lineare.py=utf-8
 encoding//mandis/migrations/0003_sorgente_poligonale_sorgente_puntiforme.py=utf-8
+encoding//mandis/migrations/0004_auto_20171019_1550.py=utf-8
+encoding//mandis/migrations/0005_auto_20171020_1005.py=utf-8
+encoding//mandis/migrations/0006_auto_20171023_1013.py=utf-8
+encoding//mandis/migrations/0007_auto_20171025_1017.py=utf-8
+encoding//mandis/migrations/0008_sorgente.py=utf-8

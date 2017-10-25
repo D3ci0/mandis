@@ -34,8 +34,5 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('area', django.contrib.gis.db.models.fields.GeometryField(geography=True, srid=4326)),
             ],
-        ),
-        migrations.DeleteModel(
-            name='Sorgente',
-        ),
+        )
     ]

@@ -13,14 +13,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='Sorgente',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('area', django.contrib.gis.db.models.fields.GeometryField(srid=4326)),
-                ('tipologia', models.IntegerField()),
-            ],
-        ),
         migrations.DeleteModel(
             name='Sorgente_lineare',
         ),
