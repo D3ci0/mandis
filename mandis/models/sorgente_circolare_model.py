@@ -1,5 +1,5 @@
 from django.contrib.gis.db import models
 
-class Sorgente(models.Model):
+class Sorgente_circolare(models.Model):
     area=models.GeometryField(geography=True)
-    tipologia=models.IntegerField()
+    raggio=models.FloatField();
