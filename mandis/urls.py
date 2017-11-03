@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^diagnosi/$', diagnosi_controller.diagnosi_list),
     url(r'^sorgenti/$', sorgente_controller.sorgenti_list),
     url(r'^patologie/$', patologia_controller.patologie_list),
+    url(r'^ricerca_sorgenti_per_diagnosi/$', sorgente_controller.sorgenti_per_diagnosi),
 ]
