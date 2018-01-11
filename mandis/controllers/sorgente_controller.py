@@ -22,7 +22,7 @@ def sorgenti_per_diagnosi(request):
                        [body['point'][0],body['point'][1],body['distanza']*1000])
         src_list= []
         for row in cursor.fetchall():
-            src = Sorgente(None, row[1], row[2])
+            src = Sorgente(None, row[1], row[2], row[3], row[4])
             src_list.append(src)
       
         serialized = serialize('geojson',src_list)
