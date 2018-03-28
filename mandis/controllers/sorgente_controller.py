@@ -39,18 +39,14 @@ def sorgenti_per_area(request):
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         geom = body['features'][0]
+        cursor = connection.cursor()
 
         if(geom['geometry']['type'] == 'circle'):
-            center = geos.Point(geom['geometry']['coordinates'][0][0],geom['geometry']['coordinates'][0][1])
-            center.srid = 4326
-            radius = geom['properties']
-            geometry = center.buffer((radius/40000000)*360)
+            cursor.execute('SELECT *, ST_Distance(area, ST_buffer(ST_GeographyFromText(\'POINT(%s %s)\'),%s)) as dist FROM mandis_sorgenti ORDER BY dist LIMIT 10', [geom['geometry']['coordinates'][0][0],geom['geometry']['coordinates'][0][1], geom['properties']])
 
         else:
             geometry = GEOSGeometry(str(geom['geometry']))
-
-        cursor = connection.cursor()
-        cursor.execute('SELECT *, ST_Distance(area, ST_GeographyFromText(%s)) as dist FROM mandis_sorgenti ORDER BY dist LIMIT 10',[geometry.wkt])
+            cursor.execute('SELECT *, ST_Distance(area, ST_GeographyFromText(%s)) as dist FROM mandis_sorgenti ORDER BY dist LIMIT 10', [geometry.wkt])
 
         sorgenti = []
         for row in cursor.fetchall():
