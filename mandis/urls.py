@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^ricerca_sorgenti_per_diagnosi/$', sorgente_controller.sorgenti_per_diagnosi),
     url(r'^ricerca_malattie_per_area/$', diagnosi_controller.diagnosi_per_area),
     url(r'^ricerca_sorgenti_per_area/$', sorgente_controller.sorgenti_per_area),
+    url(r'^ricerca_diagnosi_per_sorgente/$', diagnosi_controller.diagnosi_per_sorgente),
 ]
