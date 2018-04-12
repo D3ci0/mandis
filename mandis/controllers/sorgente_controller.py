@@ -55,3 +55,15 @@ def sorgenti_per_area(request):
 
         serialized = serialize('geojson', sorgenti)
         return JsonResponse(serialized, safe=False)
+
+@csrf_exempt
+def inserisci_sorgente_poligonale(request):
+    if request.method == 'POST':
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        geom = body['features']
+        geom = json.loads(geom)
+        geom = geom['features']
+        geometry = GEOSGeometry(str(geom[0]['geometry']))
+        cursor = connection.cursor()
+        cursor.execute('INSERT INTO mandis_sorgente_poligonale (area, data_inizio, data_fine) VALUES (ST_GeographyFromText(%s), TO_DATE(%s, \'dd/mm/yyyy\'), TO_DATE(%s, \'dd/mm/yyyy\'))', [geometry.wkt, body['data_inizio'], body['data_fine']])

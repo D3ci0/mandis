@@ -40,6 +40,7 @@ def diagnosi_per_area(request):
         serialized = json.dumps(diag_list)
         return JsonResponse(serialized, safe=False)
 
+#Query Data una sorgente di inquinamento, le malattie più frequenti entro una certa distanzada essa
 @csrf_exempt
 def diagnosi_per_sorgente(request):
     if request.method == 'POST':
@@ -49,7 +50,7 @@ def diagnosi_per_sorgente(request):
         geom = body['features']
         geometry = GEOSGeometry(str(geom['geometry']))
         cursor = connection.cursor()
-        cursor.execute('SELECT patologia, COUNT(patologia) as recurrence FROM mandis_diagnosi WHERE ST_Distance(ST_GeographyFromText(%s), residenza_paziente) <= %s GROUP BY patologia ORDER BY recurrence desc LIMIT 10', [geometry.wkt,body['distanza']])
+        cursor.execute('SELECT patologia, COUNT(patologia) as recurrence FROM mandis_diagnosi WHERE ST_Distance(ST_GeographyFromText(%s), residenza_paziente) <= %s GROUP BY patologia ORDER BY recurrence desc LIMIT 10', [geometry.wkt,body['distanza']*1000])
 
         diag_list = []
         for row in cursor.fetchall():
