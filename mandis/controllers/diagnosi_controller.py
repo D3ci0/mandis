@@ -46,7 +46,6 @@ def diagnosi_per_sorgente(request):
     if request.method == 'POST':
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
-        print(body)
         geom = body['features']
         geometry = GEOSGeometry(str(geom['geometry']))
         cursor = connection.cursor()

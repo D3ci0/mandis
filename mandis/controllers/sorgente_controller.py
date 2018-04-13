@@ -1,8 +1,7 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.serializers import serialize
 from django.contrib.gis.geos import GEOSGeometry
-from django.contrib.gis import geos
 
 from mandis.models.sorg_model import Sorg
 from mandis.models.sorgente_model import Sorgente
@@ -67,3 +66,4 @@ def inserisci_sorgente_poligonale(request):
         geometry = GEOSGeometry(str(geom[0]['geometry']))
         cursor = connection.cursor()
         cursor.execute('INSERT INTO mandis_sorgente_poligonale (area, data_inizio, data_fine) VALUES (ST_GeographyFromText(%s), TO_DATE(%s, \'dd/mm/yyyy\'), TO_DATE(%s, \'dd/mm/yyyy\'))', [geometry.wkt, body['data_inizio'], body['data_fine']])
+        return HttpResponse()
