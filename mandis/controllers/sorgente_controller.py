@@ -56,14 +56,18 @@ def sorgenti_per_area(request):
         return JsonResponse(serialized, safe=False)
 
 @csrf_exempt
-def inserisci_sorgente_poligonale(request):
+def inserisci_sorgente(request):
     if request.method == 'POST':
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
-        geom = body['features']
-        geom = json.loads(geom)
-        geom = geom['features']
-        geometry = GEOSGeometry(str(geom[0]['geometry']))
+        features = body['features']
+        features = json.loads(features)
+        features = features['features']
+        geom = features[0]['geometry']
         cursor = connection.cursor()
-        cursor.execute('INSERT INTO mandis_sorgente_poligonale (area, data_inizio, data_fine) VALUES (ST_GeographyFromText(%s), TO_DATE(%s, \'dd/mm/yyyy\'), TO_DATE(%s, \'dd/mm/yyyy\'))', [geometry.wkt, body['data_inizio'], body['data_fine']])
+        if(geom['type'] == 'circle'):
+            cursor.execute('INSERT INTO mandis_sorgente_poligonale (area, data_inizio, data_fine) VALUES (ST_buffer(ST_GeographyFromText(\'POINT(%s %s)\'), %s), TO_DATE(%s, \'dd/mm/yyyy\'), TO_DATE(%s, \'dd/mm/yyyy\'))', [geom['coordinates'][0][0], geom['coordinates'][0][1], features[0]['properties'], body['data_inizio'], body['data_fine']])
+        else:
+            geometry = GEOSGeometry(str(geom))
+            cursor.execute('INSERT INTO mandis_sorgente_poligonale (area, data_inizio, data_fine) VALUES (ST_GeographyFromText(%s), TO_DATE(%s, \'dd/mm/yyyy\'), TO_DATE(%s, \'dd/mm/yyyy\'))', [geometry.wkt, body['data_inizio'], body['data_fine']])
         return HttpResponse()
