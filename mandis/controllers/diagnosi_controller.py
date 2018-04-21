@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.gis.geos import GEOSGeometry
 from mandis.models.diag_model import Diag
@@ -58,3 +58,17 @@ def diagnosi_per_sorgente(request):
 
         serialized = json.dumps(diag_list)
         return JsonResponse(serialized, safe=False)
+
+@csrf_exempt
+def inserisci_diagnosi(request):
+    if request.method == 'POST':
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        features = body['features']
+        features = json.loads(features)
+        features = features['features']
+        geom = features[0]['geometry']
+        geometry = GEOSGeometry(str(geom))
+        cursor = connection.cursor()
+        cursor.execute('INSERT INTO mandis_diagnosi (residenza_paziente, data_diagnosi, patologia) VALUES (ST_GeographyFromText(%s), TO_DATE(%s, \'dd/mm/yyyy\'), %s)', [geometry.wkt, body['data_diagnosi'], body['patologia']])
+        return HttpResponse()
