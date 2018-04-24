@@ -2,7 +2,7 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.serializers import serialize
 from django.contrib.gis.geos import GEOSGeometry
-
+from dateutil.parser import parse
 from mandis.models.sorg_model import Sorg
 from mandis.models.sorgente_model import Sorgente
 from django.db import connection
@@ -60,6 +60,10 @@ def inserisci_sorgente(request):
     if request.method == 'POST':
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
+        try:
+            parse(body['data_fine'])
+        except ValueError:
+            body['data_fine'] = None
         features = body['features']
         features = json.loads(features)
         features = features['features']
