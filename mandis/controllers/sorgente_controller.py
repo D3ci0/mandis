@@ -70,11 +70,11 @@ def inserisci_sorgente(request):
         geom = features[0]['geometry']
         cursor = connection.cursor()
         if(geom['type'] == 'circle'):
-            cursor.execute('INSERT INTO mandis_sorgente_circolare (area, raggio, data_inizio, data_fine) VALUES (ST_buffer(ST_GeographyFromText(\'POINT(%s %s)\'), %s), %s, TO_DATE(%s, \'dd/mm/yyyy\'), TO_DATE(%s, \'dd/mm/yyyy\'))', [geom['coordinates'][0][0], geom['coordinates'][0][1], features[0]['properties'], features[0]['properties']/1000, body['data_inizio'], body['data_fine']])
+            cursor.execute('INSERT INTO mandis_sorgente_circolare (cerchio, raggio, data_inizio, data_fine) VALUES (ST_buffer(ST_GeographyFromText(\'POINT(%s %s)\'), %s), %s, TO_DATE(%s, \'dd/mm/yyyy\'), TO_DATE(%s, \'dd/mm/yyyy\'))', [geom['coordinates'][0][0], geom['coordinates'][0][1], features[0]['properties'], features[0]['properties']/1000, body['data_inizio'], body['data_fine']])
         elif(geom['type'] == 'linestring'):
             geometry = GEOSGeometry(str(geom))
-            cursor.execute('INSERT INTO mandis_sorgente_lineare (area, data_inizio, data_fine) VALUES (ST_GeographyFromText(%s), TO_DATE(%s, \'dd/mm/yyyy\'), TO_DATE(%s, \'dd/mm/yyyy\'))', [geometry.wkt, body['data_inizio'], body['data_fine']])
+            cursor.execute('INSERT INTO mandis_sorgente_lineare (linea, data_inizio, data_fine) VALUES (ST_GeographyFromText(%s), TO_DATE(%s, \'dd/mm/yyyy\'), TO_DATE(%s, \'dd/mm/yyyy\'))', [geometry.wkt, body['data_inizio'], body['data_fine']])
         else:
             geometry = GEOSGeometry(str(geom))
-            cursor.execute('INSERT INTO mandis_sorgente_poligonale (area, data_inizio, data_fine) VALUES (ST_GeographyFromText(%s), TO_DATE(%s, \'dd/mm/yyyy\'), TO_DATE(%s, \'dd/mm/yyyy\'))', [geometry.wkt, body['data_inizio'], body['data_fine']])
+            cursor.execute('INSERT INTO mandis_sorgente_poligonale (poligono, data_inizio, data_fine) VALUES (ST_GeographyFromText(%s), TO_DATE(%s, \'dd/mm/yyyy\'), TO_DATE(%s, \'dd/mm/yyyy\'))', [geometry.wkt, body['data_inizio'], body['data_fine']])
         return HttpResponse()
