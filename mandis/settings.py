@@ -94,11 +94,11 @@ WSGI_APPLICATION = 'mandis.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'd356a3m6qd1phc',
-        'USER': 'gyntkdkmnhdzjo',
-        'PASSWORD': '18e245b001185b2f9ed58193f7f0e68b2e26276c21d60bd90c3e6c896b22a1f4',
-        'HOST': 'ec2-107-20-186-238.compute-1.amazonaws.com',
-        'PORT': '5432',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
